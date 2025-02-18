@@ -24,3 +24,7 @@ Run `rojo serve` in the root directory to start the server.
 ### Build the project
 
 Run `rojo build -o "ink-packages.rbxlx"` in the root directory to build the project.
+
+### Update assets
+
+Run `tarmac sync --target roblox --auth <ROBLOX_COOKIE>` in the root directory to update the assets.

@@ -5,4 +5,4 @@
 [tools]
 wally = "UpliftGames/wally@0.3.2"
 rojo = "rojo-rbx/rojo@7.4.4"
-# rojo = "rojo-rbx/rojo@6.2.0"
+tarmac = "Roblox/tarmac@0.8.2"
