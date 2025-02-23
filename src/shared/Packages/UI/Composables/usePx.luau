@@ -1,11 +1,12 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
-local vide = require(ReplicatedStorage.Packages.vide)
 local Workspace = game:GetService("Workspace")
+
+local vide = require(ReplicatedStorage.Dependencies.vide)
 local source = vide.source
 local callable = require(script.Parent.callable)
 local useEvent = require(script.Parent.useEvent)
 
-local BASE_RESOLUTION = Vector2.new(1920, 1080)
+local BASE_RESOLUTION = Vector2.new(1280, 720)
 local MIN_SCALE = 0.5
 local DOMINANT_AXIS = 0.5
 
@@ -28,7 +29,8 @@ end, {
     end,
 }) :: (number) -> number
 
-local function usePx(): ()
+-- Should be called once in the client.
+local function usePx(once: boolean): ()
     local camera = Workspace.CurrentCamera
     local updateScale = function()
         local width = math.log(camera.ViewportSize.X / BASE_RESOLUTION.X, 2)
@@ -36,9 +38,13 @@ local function usePx(): ()
         local centered = width + (height - width) * DOMINANT_AXIS
         scale(math.max(2 ^ centered, MIN_SCALE))
     end
-    useEvent(camera:GetPropertyChangedSignal("ViewportSize"), function()
-        updateScale()
-    end)
+
+    if not once then
+        useEvent(camera:GetPropertyChangedSignal("ViewportSize"), function()
+            updateScale()
+        end)
+    end
+
     updateScale()
 end
 
